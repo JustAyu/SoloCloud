@@ -43,9 +43,13 @@ GIT_TOKEN = getenv(
 SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/Life_Codes")
 SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/Life_Codes")
 
-# Set this to True if you want the assistant to automatically leave chats after an interval
-AUTO_LEAVING_ASSISTANT = bool(getenv("AUTO_LEAVING_ASSISTANT", True))
+# Set it in True if you want to leave your assistant after a certain amount of time. [Set time via AUTO_LEAVE_ASSISTANT_TIME]
+AUTO_LEAVING_ASSISTANT = getenv("AUTO_LEAVING_ASSISTANT", True)
 
+# Time after which you're assistant account will leave chats automatically.
+AUTO_LEAVE_ASSISTANT_TIME = int(
+    getenv("ASSISTANT_LEAVE_TIME", "9000")
+)  # Remember to give value in Seconds
 
 # Get this credentials from https://developer.spotify.com/dashboard
 SPOTIFY_CLIENT_ID = getenv("SPOTIFY_CLIENT_ID")
