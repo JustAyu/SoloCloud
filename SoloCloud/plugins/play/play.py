@@ -163,7 +163,11 @@ async def play_commnd(
                         config.PLAYLIST_FETCH_LIMIT,
                         message.from_user.id,
                     )
-                except:
+                except Exception as err:
+                    try:
+                        await app.send_message(chat_id=config.LOGGER_ID, text=f"**🔴>> ERROR IN PROCCESSING THE QUERY :**\n{err}")
+                    except:
+                        pass
                     return await mystic.edit_text(_["play_3"])
                 streamtype = "playlist"
                 plist_type = "yt"
@@ -176,7 +180,11 @@ async def play_commnd(
             else:
                 try:
                     details, track_id = await YouTube.track(url)
-                except:
+                except Exception as err:
+                    try:
+                        await app.send_message(chat_id=config.LOGGER_ID, text=f"**🔴>> ERROR IN PROCCESSING THE QUERY :**\n{err}")
+                    except:
+                        pass
                     return await mystic.edit_text(_["play_3"])
                 streamtype = "youtube"
                 img = details["thumb"]
@@ -193,7 +201,11 @@ async def play_commnd(
             if "track" in url:
                 try:
                     details, track_id = await Spotify.track(url)
-                except:
+                except Exception as err:
+                    try:
+                        await app.send_message(chat_id=config.LOGGER_ID, text=f"**🔴>> ERROR IN PROCCESSING THE QUERY :**\n{err}")
+                    except:
+                        pass
                     return await mystic.edit_text(_["play_3"])
                 streamtype = "youtube"
                 img = details["thumb"]
@@ -201,7 +213,11 @@ async def play_commnd(
             elif "playlist" in url:
                 try:
                     details, plist_id = await Spotify.playlist(url)
-                except Exception:
+                except Exception as err:
+                    try:
+                        await app.send_message(chat_id=config.LOGGER_ID, text=f"**🔴>> ERROR IN PROCCESSING THE QUERY :**\n{err}")
+                    except:
+                        pass
                     return await mystic.edit_text(_["play_3"])
                 streamtype = "playlist"
                 plist_type = "spplay"
@@ -210,7 +226,11 @@ async def play_commnd(
             elif "album" in url:
                 try:
                     details, plist_id = await Spotify.album(url)
-                except:
+                except Exception as err:
+                    try:
+                        await app.send_message(chat_id=config.LOGGER_ID, text=f"**🔴>> ERROR IN PROCCESSING THE QUERY :**\n{err}")
+                    except:
+                        pass
                     return await mystic.edit_text(_["play_3"])
                 streamtype = "playlist"
                 plist_type = "spalbum"
@@ -219,7 +239,11 @@ async def play_commnd(
             elif "artist" in url:
                 try:
                     details, plist_id = await Spotify.artist(url)
-                except:
+                except Exception as err:
+                    try:
+                        await app.send_message(chat_id=config.LOGGER_ID, text=f"**🔴>> ERROR IN PROCCESSING THE QUERY :**\n{err}")
+                    except:
+                        pass
                     return await mystic.edit_text(_["play_3"])
                 streamtype = "playlist"
                 plist_type = "spartist"
@@ -270,7 +294,11 @@ async def play_commnd(
             query = query.replace("-v", "")
         try:
             details, track_id = await YouTube.track(query)
-        except:
+        except Exception as err:
+            try:
+                await app.send_message(chat_id=config.LOGGER_ID, text=f"**🔴>> ERROR IN PROCCESSING THE QUERY :**\n{err}")
+            except:
+                pass
             return await mystic.edit_text(_["play_3"])
         streamtype = "youtube"
     if str(playmode) == "Direct":
@@ -399,7 +427,11 @@ async def play_music(client, CallbackQuery, _):
     )
     try:
         details, track_id = await YouTube.track(vidid, True)
-    except:
+    except Exception as err:
+        try:
+            await app.send_message(chat_id=config.LOGGER_ID, text=f"**🔴>> ERROR IN PROCCESSING THE QUERY :**\n{err}")
+        except:
+            pass
         return await mystic.edit_text(_["play_3"])
     if details["duration_min"]:
         duration_sec = time_to_seconds(details["duration_min"])
@@ -497,22 +529,38 @@ async def play_playlists_command(client, CallbackQuery, _):
                 CallbackQuery.from_user.id,
                 True,
             )
-        except:
+        except Exception as err:
+            try:
+                await app.send_message(chat_id=config.LOGGER_ID, text=f"**🔴>> ERROR IN PROCCESSING THE QUERY :**\n{err}")
+            except:
+                pass
             return await mystic.edit_text(_["play_3"])
     if ptype == "spplay":
         try:
             result, spotify_id = await Spotify.playlist(videoid)
-        except:
+        except Exception as err:
+            try:
+                await app.send_message(chat_id=config.LOGGER_ID, text=f"**🔴>> ERROR IN PROCCESSING THE QUERY :**\n{err}")
+            except:
+                pass
             return await mystic.edit_text(_["play_3"])
     if ptype == "spalbum":
         try:
             result, spotify_id = await Spotify.album(videoid)
-        except:
+        except Exception as err:
+            try:
+                await app.send_message(chat_id=config.LOGGER_ID, text=f"**🔴>> ERROR IN PROCCESSING THE QUERY :**\n{err}")
+            except:
+                pass
             return await mystic.edit_text(_["play_3"])
     if ptype == "spartist":
         try:
             result, spotify_id = await Spotify.artist(videoid)
-        except:
+        except Exception as err:
+            try:
+                await app.send_message(chat_id=config.LOGGER_ID, text=f"**🔴>> ERROR IN PROCCESSING THE QUERY :**\n{err}")
+            except:
+                pass
             return await mystic.edit_text(_["play_3"])
     try:
         await stream(

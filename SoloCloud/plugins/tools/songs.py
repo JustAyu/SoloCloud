@@ -1,6 +1,6 @@
 import os
 import re
-
+import config
 import yt_dlp
 from pykeyboard import InlineKeyboard
 from pyrogram import filters
@@ -91,7 +91,11 @@ async def song_commad_private(client, message: Message, _):
             thumbnail,
             vidid,
         ) = await YouTube.details(query)
-    except:
+    except Exception as err:
+        try:
+            await app.send_message(chat_id=config.LOGGER_ID, text=f"**🔴>> ERROR IN PROCCESSING THE QUERY :**\n{err}")
+        except:
+            pass
         return await mystic.edit_text(_["play_3"])
     if str(duration_min) == "None":
         return await mystic.edit_text(_["song_3"])

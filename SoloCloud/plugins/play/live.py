@@ -1,3 +1,4 @@
+import config
 from pyrogram import filters
 
 from SoloCloud import YouTube, app
@@ -34,7 +35,11 @@ async def play_live_stream(client, CallbackQuery, _):
     )
     try:
         details, track_id = await YouTube.track(vidid, True)
-    except:
+    except Exception as err:
+        try:
+            await app.send_message(chat_id=config.LOGGER_ID, text=f"**🔴>> ERROR IN PROCCESSING THE QUERY :**\n{err}")
+        except:
+            pass
         return await mystic.edit_text(_["play_3"])
     ffplay = True if fplay == "f" else None
     if not details["duration_min"]:
